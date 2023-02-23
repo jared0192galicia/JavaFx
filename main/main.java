@@ -28,19 +28,24 @@ public class main extends Application {
         
         primaryStage.setTitle("Prueba");
         
-        // Root node
-        Group root = new Group();
-        
         // Create node label
         Label label = new Label("Hola weyes");
         Line line = new Line();
         
-        // Add label at node root
-        root.getChildren().add(label);
-        // Main node: Scene
-        Scene scene = new Scene(root, 300, 300);
+        // Root node
+        Group root = new Group(line);
         
-        scene.setFill(Color.TRANSPARENT);
+        line.setStartX(100);
+        line.setStartY(150);
+        line.setEndX(500);
+        line.setEndY(150);
+        line.setFill(Color.BLACK);
+        // Add label at node root
+        //root.getChildren().add(label);
+        // Main node: Scene
+        Scene scene = new Scene(root, 600, 300);
+        
+        scene.setFill(Color.AQUA);
         
         // Add Scene at stage and show UI: setVisible
         primaryStage.setScene(scene);
