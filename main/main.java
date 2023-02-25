@@ -8,9 +8,10 @@ package main;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 
 /**
@@ -29,17 +30,23 @@ public class main extends Application {
         primaryStage.setTitle("Prueba");
         
         // Create node label
-        Label label = new Label("Hola weyes");
-        Line line = new Line();
+        Path path = new Path();
+        
+        MoveTo moveTo = new MoveTo(108, 71);
+        
+        LineTo line1 = new LineTo(321, 161);
+        LineTo line2 = new LineTo(126, 232);
+        LineTo line3 = new LineTo(232, 52);
+        LineTo line4 = new LineTo(269, 250);
+        LineTo line5 = new LineTo(108, 71);
+        
+        path.getElements().add(moveTo);
+        path.getElements().addAll(line1, line2, line3, line4, line5);
         
         // Root node
-        Group root = new Group(line);
+        Group root = new Group(path);
         
-        line.setStartX(100);
-        line.setStartY(150);
-        line.setEndX(500);
-        line.setEndY(150);
-        line.setFill(Color.BLACK);
+        
         // Add label at node root
         //root.getChildren().add(label);
         // Main node: Scene
