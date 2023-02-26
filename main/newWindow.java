@@ -6,11 +6,12 @@
 package main;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -21,19 +22,19 @@ public class newWindow extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+        
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        Label labelTitle = new Label("Login");
+        Label labelUser = new Label("User");
+        Label labelPass = new Label("Password");
         
+        TextField textUser = new TextField();
+        PasswordField textPass = new PasswordField();
+        
+        VBox root = new VBox();
+        
+        root.getChildren().addAll(labelTitle, labelUser, textUser, labelPass, textPass);
         Scene scene = new Scene(root, 300, 250);
         
         primaryStage.setTitle("Hello World!");

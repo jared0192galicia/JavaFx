@@ -7,18 +7,27 @@ package main;
 
 import javafx.geometry.Insets;
 import javafx.application.Application;
-import javafx.scene.Cursor;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author jared
  */
 public class main extends Application {
+    
+    String user;
+    String pass;
+    
     public static void main(String[] args) {
         System.out.println("Hola mundo!");
         launch(args);
@@ -28,60 +37,58 @@ public class main extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
         
         // Create buttons for frame form
-        Button button1 = new Button("boton 1");
-        Button button2 = new Button("boton 2");
-        Button button3 = new Button("boton 3");
-        Button button4 = new Button("boton 4");
-        Button button5 = new Button("boton 5");
+        Button btn = new Button("Acceder");
         
-        BorderPane root = new BorderPane();
+        Label labelTitle = new Label("Login");
+        Label labelUser = new Label("User");
+        Label labelPass = new Label("Password");
         
-        // Add buttons to layout
-        root.setCenter(button1);
-        button1.setCursor(Cursor.CROSSHAIR);
-        button1.setMaxHeight(Double.MAX_VALUE);
-        button1.setMaxWidth(Double.MAX_VALUE);
-        BorderPane.setMargin(button1, new Insets(5, 5, 5, 5));
+        TextField textUser = new TextField();
+        PasswordField textPass = new PasswordField();
         
-        root.setBottom(button2);
-        button2.setCursor(Cursor.DISAPPEAR);
-        button2.setMaxHeight(Double.MAX_VALUE);
-        button2.setMaxWidth(Double.MAX_VALUE);
-        BorderPane.setMargin(button1, new Insets(5, 5, 5, 5));
+        labelTitle.setFont(new Font(30));
+        labelUser.setFont(new Font(20));
+        labelPass.setFont(new Font(20));
         
-        root.setLeft(button3);
-        button3.setCursor(Cursor.OPEN_HAND);
-        button3.setMaxHeight(Double.MAX_VALUE);
-        button3.setMaxWidth(Double.MAX_VALUE);
-        button3.setOnMouseClicked((t) -> {
-            newWindow window = new newWindow();
-            System.out.println("Create instance");
+        textUser.setMaxWidth(210);
+        textPass.setMaxWidth(210);
+        
+        VBox root = new VBox();
+        VBox.setMargin(labelTitle, new Insets(5,0,0,0));
+        VBox.setMargin(labelUser, new Insets(10,0,0,0));
+        VBox.setMargin(labelPass, new Insets(10,0,0,0));
+        VBox.setMargin(textUser, new Insets(10,0,0,0));
+        VBox.setMargin(textPass, new Insets(10,0,0,0));
+        VBox.setMargin(btn, new Insets(10,0,0,0));
+        root.setAlignment(Pos.CENTER);
+        
+        btn.setOnMouseClicked((MouseEvent t) -> {
+            String aUser = textUser.getText();
+            String aPass = textPass.getText();
+            
+            if (!aPass.equals("") && !aUser.equals("")) {
+                if (aPass.equals(pass) && aUser.equals(user)) {
+                    JOptionPane.showMessageDialog(null, "Entraste");
+                } else {
+                    JOptionPane.showMessageDialog(null, "datos no validos");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debes llenar todo wey");
+            }
         });
-        BorderPane.setMargin(button1, new Insets(5, 5, 5, 5));
         
-        root.setRight(button4);
-        button4.setCursor(Cursor.WAIT);
-        button4.setMaxHeight(Double.MAX_VALUE);
-        button4.setMaxWidth(Double.MAX_VALUE);
-        BorderPane.setMargin(button1, new Insets(5, 5, 5, 5));
+        root.getChildren().addAll(labelTitle, labelUser, textUser, labelPass, textPass, btn);
+        Scene scene = new Scene(root, 300, 250);
         
-        root.setTop(button5);
-        button5.setCursor(Cursor.CLOSED_HAND);
-        button5.setMaxHeight(Double.MAX_VALUE);
-        button5.setMaxWidth(Double.MAX_VALUE);
-        BorderPane.setMargin(button1, new Insets(5, 5, 5, 5));
-        
-        Scene scene = new Scene(root, 600, 300);
-        
-        scene.setFill(Color.AQUA);
-        
-        // Add Scene at stage and show UI: setVisible
+        primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Prueba");
         primaryStage.show();
         
-        root.setOpacity(0.9);
-        // Main node: Scene
-        
+    }
+    
+    @Override
+    public void init() {
+        user = "juancho";
+        pass = "12345678";
     }
 }
