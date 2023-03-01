@@ -5,19 +5,27 @@
  */
 package main;
 
+import java.io.InputStream;
 import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,60 +40,93 @@ public class main extends Application {
         System.out.println("Hola mundo!");
         launch(args);
     }
-
+    
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage primaryStage) {
+
+        VBox containerLeft = new VBox();
+
+        //AGREGAMOS NODOS HIJOS (containerLeft)
         
-        // Create buttons for frame form
-        Button btn = new Button("Acceder");
+        Label labelTitle = new Label("Iniciar Sesión");
+        labelTitle.setFont(new Font(40));
         
-        Label labelTitle = new Label("Login");
-        Label labelUser = new Label("User");
-        Label labelPass = new Label("Password");
+        VBox containerLogin = new VBox();
+
+        //AGREGAMOS NODOS HIJOS(containerLogin)
         
-        TextField textUser = new TextField();
-        PasswordField textPass = new PasswordField();
-        
-        labelTitle.setFont(new Font(30));
+        Label labelUser = new Label("Usuario");
+        //Cambiamos tamaño de fuente
         labelUser.setFont(new Font(20));
-        labelPass.setFont(new Font(20));
         
-        textUser.setMaxWidth(210);
-        textPass.setMaxWidth(210);
+        Label labelPassword = new Label("Contraseña");
+        labelPassword.setFont(new Font(20));
+
+        TextField textUser = new TextField();
+        textUser.setFont(new Font(18));
+        //Agregamos texto informativo al textField
+        textUser.setPromptText("Ingrese su usuario");
+        //asignamos dimensiones predefinidas
+        textUser.setPrefWidth(341);
+        textUser.setPrefHeight(44);
         
-        VBox root = new VBox();
-        VBox.setMargin(labelTitle, new Insets(5,0,0,0));
-        VBox.setMargin(labelUser, new Insets(10,0,0,0));
-        VBox.setMargin(labelPass, new Insets(10,0,0,0));
-        VBox.setMargin(textUser, new Insets(10,0,0,0));
-        VBox.setMargin(textPass, new Insets(10,0,0,0));
-        VBox.setMargin(btn, new Insets(10,0,0,0));
-        root.setAlignment(Pos.CENTER);
+        PasswordField textPass = new PasswordField();
+        textPass.setFont(new Font(18));
+        textPass.setPromptText("Ingrese su contraseña");        
+        textPass.setPrefWidth(341);
+        textPass.setPrefHeight(44);        
         
-        btn.setOnMouseClicked((MouseEvent t) -> {
-            String aUser = textUser.getText();
-            String aPass = textPass.getText();
-            
-            if (!aPass.equals("") && !aUser.equals("")) {
-                if (aPass.equals(pass) && aUser.equals(user)) {
-                    JOptionPane.showMessageDialog(null, "Entraste");
-                } else {
-                    JOptionPane.showMessageDialog(null, "datos no validos");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Debes llenar todo wey");
-            }
-        });
+        Button btnLogin = new Button("Entrar");
+        btnLogin.setFont(new Font(20));
+        btnLogin.setPrefWidth(370);
+        btnLogin.setPrefHeight(44);                
+        btnLogin.setMaxWidth(Double.MAX_VALUE);
+        btnLogin.setCursor(Cursor.HAND);
+
+        //agregamos nodos hijos al containerLogin
+        containerLogin.getChildren().addAll(labelUser, textUser, labelPassword, textPass, btnLogin);
+        containerLogin.setAlignment(Pos.TOP_LEFT);
+
+        //Agregamos margenes a los nodos que corresponden
+        VBox.setMargin(labelUser, new Insets(10, 0, 0, 0));
+        VBox.setMargin(labelPassword, new Insets(10, 0, 0, 0));
+        VBox.setMargin(btnLogin, new Insets(20, 0, 0, 0));
         
-        root.getChildren().addAll(labelTitle, labelUser, textUser, labelPass, textPass, btn);
-        Scene scene = new Scene(root, 300, 250);
+        containerLeft.getChildren().addAll(labelTitle, containerLogin);
+        containerLeft.setPrefWidth(422);
+        containerLeft.setAlignment(Pos.CENTER);
+        VBox.setMargin(containerLogin, new Insets(0, 30, 0, 30));        
         
-        primaryStage.setTitle("Hello World!");
+        VBox containerRight = new VBox();        
+        
+        //AGREGAMOS NODOS containerRight        
+        ImageView imageLogo;
+
+        //Agregamos una imaagen
+        InputStream inputStream;
+        inputStream =  getClass().getResourceAsStream("/image/logo.png");
+        Image image = new Image(inputStream);
+
+        imageLogo = new ImageView(image);
+        containerRight.getChildren().add(imageLogo);
+        
+        containerRight.setPrefWidth(422);
+        containerRight.setAlignment(Pos.CENTER);
+        containerRight.setBackground(new Background(new BackgroundFill(Color.web("#30373e"), CornerRadii.EMPTY, Insets.EMPTY)));
+               
+        HBox root = new HBox();
+        root.getChildren().addAll(containerLeft, containerRight);
+        HBox.setHgrow(containerLeft, Priority.ALWAYS);
+        HBox.setHgrow(containerRight, Priority.ALWAYS);
+        
+        Scene scene = new Scene(root, 854, 503);
+        
+        primaryStage.setTitle("HBox Layout");
         primaryStage.setScene(scene);
         primaryStage.show();
         
     }
-    
+
     @Override
     public void init() {
         user = "juancho";
